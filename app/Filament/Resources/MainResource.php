@@ -41,10 +41,12 @@ class MainResource extends Resource
                     ->unique(table: Main_arc::class)
                     ->default(Main::max('id')+1)
                     ->autofocus()
-                    ->numeric(),
+                    ->numeric()
+                   ->columnSpan(2),
                TextInput::make('name')
                     ->label('الزبون')
-                    ->required(),
+                    ->required()
+                    ->columnSpan(2),
 
 
                 Select::make('bank_id')
@@ -171,7 +173,7 @@ class MainResource extends Resource
                                 TextInput::make('nat_id')
                                     ->label('الرقم الوطني'),
 
-            ]);
+            ])->columns(4);
     }
 
     public static function table(Table $table): Table
@@ -181,7 +183,10 @@ class MainResource extends Resource
                 TextColumn::make('name')->label('الاسم')->searchable()->sortable(),
                 TextColumn::make('Bank.BankName')->label('المصرف')->searchable()->sortable(),
                 TextColumn::make('acc')->label('رقم الحساب')->searchable()->sortable(),
-                TextColumn::make('kst')->label('القسط')->sortable(),
+                TextColumn::make('kst')->label('القسط'),
+                TextColumn::make('tran_sum_ksm')
+                ->label('إجمالي الاقساط المخصومة')
+                ->sum('Tran','ksm')
             ])
             ->filters([
                 //

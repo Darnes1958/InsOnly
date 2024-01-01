@@ -19,7 +19,7 @@ use AksatTrait;
     public $ksm = '';
     public $ksm_date = '';
     public $kst_date ='';
-    public $ksm_type_id = 2;
+    public $ksm_type = 'مصرفي';
     public $ksm_notes = '';
     public $user_id = '';
 
@@ -30,7 +30,7 @@ use AksatTrait;
       $this->ksm=$rec->ksm;
       $this->ksm_date=$rec->ksm_date;
       $this->kst_date=$rec->kst_date;
-      $this->ksm_type_id=$rec->ksm_type_id;
+      $this->ksm_type=$rec->ksm_type;
       $this->ksm_notes=$rec->ksm_notes;
       $this->user_id=Auth::user()->id;
     }
@@ -40,13 +40,14 @@ use AksatTrait;
     $this->ksm=$rec->ksm;
     $this->ksm_date=$rec->ksm_date;
     $this->kst_date=$rec->kst_date;
-    $this->ksm_type_id=$rec->ksm_type_id;
+    $this->ksm_type=$rec->ksm_type;
     $this->ksm_notes=$rec->ksm_notes;
     $this->user_id=Auth::user()->id;
   }
 
-    public function FillTrans($main_id,$ksm_date){
+    public function FillTrans($main_id,$ksm_date,$ksm_notes){
         $this->main_id=$main_id;
+        $this->ksm_notes=$ksm_notes;
         $this->ser=Tran::where('main_id',$main_id)->max('ser')+1;
         $this->ksm=Main::find($main_id)->kst;
         $this->kst_date=$this->getKst_date($main_id);

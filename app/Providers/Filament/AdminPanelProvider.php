@@ -24,7 +24,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->sidebarFullyCollapsibleOnDesktop()
+            ->sidebarCollapsibleOnDesktop()
             ->breadcrumbs(false)
             ->maxContentWidth('Full')
             ->default()

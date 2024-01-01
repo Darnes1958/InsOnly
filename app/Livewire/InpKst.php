@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 
 use App\Livewire\Forms\TransForm;
+use App\Models\Bank;
 use App\Models\Main;
+use App\Models\Tran;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -22,8 +25,9 @@ class InpKst extends Component implements HasForms,HasTable
 {
     use InteractsWithForms,InteractsWithTable;
 
-    public $bank=1;
+    public $bank_id;
     public $ksm_date;
+    public $ksm_notes;
 
     public TransForm $transForm;
 
@@ -31,22 +35,35 @@ class InpKst extends Component implements HasForms,HasTable
     {
         return $form
             ->schema([
-                Select::make('bank')
-                    ->relationship('Bank','bank_name')
+                Select::make('bank_id')
+                    ->options(Bank::all()->pluck('BankName','id'))
+                    ->label('المصرف')
                     ->reactive()
-                    ->preload(),
+                    ->live()
+                    ->preload()
+                    ->columnSpan(2)
+                    ->extraAttributes([
+                        'wire:change' => "\$dispatch('goto', { test: 'ksmdate' })",
+                    ]),
                 DatePicker::make('ksm_date')
                     ->label('تاريخ الخصم')
                     ->reactive()
-                    ->inlineLabel()
-            ]);
+                    ->extraAttributes([
+                        'wire:keydown.enter' => "\$dispatch('goto', { test: 'ksmnotes' })",
+                    ])
+                    ->id('ksmdate'),
+                TextInput::make('ksm_notes')
+                    ->label('ملاحظات')
+                    ->columnSpan(3)
+                    ->id('ksmnotes')
+            ])->columns(6);
     }
 
     public function table(Table $table):Table
     {
         return $table
             ->query(function (Main $main)  {
-                $main=Main::where('bank',$this->bank);
+                $main=Main::where('bank_id',$this->bank_id);
                 return  $main;
             })
             ->columns([
@@ -58,22 +75,25 @@ class InpKst extends Component implements HasForms,HasTable
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('acc')->sortable()->searchable()
-                    ->label('رقم الحساب'),
+                    ->label('رقم الحساب')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('kst')->sortable()->searchable()
+                    ->label('القسط'),
             ])
 
             ->bulkActions([
-
                 BulkAction::make('خصم')
-                    ->color('danger')
+                    ->color('success')
                     ->requiresConfirmation()
                     ->action(function (Collection $records) {
                         foreach ($records as  $item)
                         {
-                            $this->transForm->FillTrans($records->main_id,$this->ksm_date);
-                            $this->transForm->Save($this->transForm->all());
+                            $this->transForm->FillTrans($item->id,$this->ksm_date,$this->ksm_notes);
+                           Tran::create($this->transForm->all());
                         }
 
-                    }),
+                    })->deselectRecordsAfterCompletion(),
             ])
             ->striped();
     }
