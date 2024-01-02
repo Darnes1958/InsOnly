@@ -22,8 +22,8 @@
             <tr style="background: #9dc1d3;">
                 <th style="width: 14%">ت.اخر قسط</th>
                 <th style="width: 8%">المتاخرة</th>
-                <th style="width: 10%">المسدد</th>
-                <th style="width: 12%">اجمالي العقد</th>
+
+                <th style="width: 12%">القسط</th>
                 <th style="width: 16%">رقم الحساب</th>
                 <th style="width: 10%">رقم العقد</th>
                 <th>اسم الزبون</th>
@@ -32,25 +32,25 @@
             </thead>
             <tbody id="addRow" class="addRow">
 
-            @php $sumpay=0;$sumsul=0; @endphp
+            @php $sumkst=0; @endphp
 
             @foreach($RepTable as $key=> $item)
                 <tr >
                     <td style="text-align: center"> {{ $item->LastKsm }} </td>
                     <td style="text-align: center"> {{ $item->Late }} </td>
-                    <td> {{ number_format($item->pay,2, '.', ',') }} </td>
-                    <td> {{ number_format($item->sul,2, '.', ',') }} </td>
+
+                    <td> {{ number_format($item->kst,2, '.', ',') }} </td>
                     <td> {{ $item->acc }} </td>
                     <td style="text-align: center"> {{ $item->id }} </td>
-                    <td> {{ $item->Customer->CusName }} </td>
+                    <td> {{ $item->name }} </td>
                 </tr>
-                @php $sumpay+=$item->pay;$sumsul+=$item->sul; @endphp
+                @php $sumkst+=$item->kst; @endphp
             @endforeach
             <tr class="font-size-12 " style="font-weight: bold">
                 <td></td>
                 <td>   </td>
-                <td> {{number_format($sumpay, 2, '.', ',')}}  </td>
-                <td> {{number_format($sumsul, 2, '.', ',')}}  </td>
+
+                <td> {{number_format($sumkst, 2, '.', ',')}}  </td>
                 <td> </td>
                 <td> </td>
                 <td style="font-weight:normal;">الإجمــــــــالي  </td>

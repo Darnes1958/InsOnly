@@ -44,6 +44,15 @@ trait AksatTrait {
     return $months;
 
   }
+    public function LateChk(){
+        $Main=Main::where('LastUpd','<',now())->get();
+        foreach ($Main as $main)
+            Main::where('id',$main->id)->
+            update([
+                'LastUpd'=>now(),
+                'Late'=>$this->RetLate($main->id,$main->NextKst),
+            ]);
+    }
 
 
 
