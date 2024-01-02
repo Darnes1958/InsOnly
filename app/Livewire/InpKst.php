@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 
 use App\Livewire\Forms\TransForm;
+use App\Livewire\Traits\AksatTrait;
 use App\Models\Bank;
 use App\Models\Main;
 use App\Models\Tran;
@@ -24,7 +25,7 @@ use Livewire\Component;
 class InpKst extends Component implements HasForms,HasTable
 {
     use InteractsWithForms,InteractsWithTable;
-
+    use AksatTrait;
     public $bank_id;
     public $ksm_date;
     public $ksm_notes;
@@ -89,8 +90,14 @@ class InpKst extends Component implements HasForms,HasTable
                     ->action(function (Collection $records) {
                         foreach ($records as  $item)
                         {
-                            $this->transForm->FillTrans($item->id,$this->ksm_date,$this->ksm_notes);
+                           $this->transForm->FillTrans($item->id,$this->ksm_date,$this->ksm_notes);
                            Tran::create($this->transForm->all());
+                           $nextKst=date('Y-m-d', strtotime($this->transForm->kst_date . "+1 month"));
+                           Main::find($item->id)->update([
+                             'LastKsm'=>$this->ksm_date,
+                             'NextKst'=>$nextKst,
+                             'Late'=>$this->RetLate($item->id,$nextKst),
+                             ]);
                         }
 
                     })->deselectRecordsAfterCompletion(),

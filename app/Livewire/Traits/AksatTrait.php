@@ -4,6 +4,7 @@ namespace App\Livewire\Traits;
 
 use App\Models\Main;
 use App\Models\Tran;
+use Carbon\Carbon;
 use DateTime;
 
 trait AksatTrait {
@@ -31,6 +32,19 @@ trait AksatTrait {
 
         }
     }
+
+  public function RetLate($main_id,$nextKst){
+    $toDate = Carbon::parse($nextKst);
+    $fromDate = Carbon::now();
+
+    if ($fromDate>$toDate)
+      $months = $toDate->diffInMonths($fromDate);
+    else $months=0;
+
+    return $months;
+
+  }
+
 
 
 }

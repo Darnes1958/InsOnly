@@ -51,14 +51,8 @@
                                       الاجمالي الكلي
                                     </span>
                                 @endif
-                                    @if($column->getName() =='sul' || $column->getName() =='main_sum_sul')
-                                     <input wire:model.live="sul"  class="text-sm w-32 font-medium px-0 mx-0 bg-transparent border-none " readonly/>
-                                    @endif
-                                    @if($column->getName() =='pay' || $column->getName() =='main_sum_pay')
-                                        <input wire:model.live="pay" class="text-sm w-32 font-medium px-0 mx-0 bg-transparent border-none" readonly/>
-                                    @endif
-                                    @if($column->getName() =='raseed')
-                                        <input wire:model.live="raseed" class="text-sm w-32 font-medium px-0 mx-0 bg-transparent border-none" readonly/>
+                                    @if($column->getName() =='kst' || $column->getName() =='main_sum_kst')
+                                     <input wire:model.live="kst"  class="text-sm w-32 font-medium px-0 mx-0 bg-transparent border-none " readonly/>
                                     @endif
                                     @if($column->getName() =='main_count')
                                         <input wire:model.live="count" class="text-sm w-32 font-medium px-0 mx-0 bg-transparent border-none" readonly/>

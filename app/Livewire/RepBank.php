@@ -7,12 +7,18 @@ use App\Models\Main;
 use App\Models\Overkst;
 use App\Models\Tarkst;
 use App\Models\Wrongkst;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Livewire\Component;
 
-class RepBank extends Component
+class RepBank extends Component  implements HasTable, HasForms
 {
+  use InteractsWithTable,InteractsWithForms;
+
     public $By=1;
     public $kst;
 
@@ -53,15 +59,7 @@ class RepBank extends Component
                 TextColumn::make('main_sum_kst')
                     ->sum('Main','kst')
                     ->label('اجمالي العقود'),
-                TextColumn::make('main_sum_over_kst')
-                    ->sum('Main','over_kst')
-                    ->label('الفائض'),
-                TextColumn::make('main_sum_tar_kst')
-                    ->sum('Main','tar_kst')
-                    ->label('الترجيع'),
-                TextColumn::make('wrong_kst_sum_kst')
-                    ->sum('WrongKst','kst')
-                    ->label('بالخطأ'),
+
             ])
             ->contentFooter(view('sum-footer',$this->data_list))
             ;
