@@ -6,6 +6,8 @@ use App\Filament\Resources\MainResource\Pages;
 use App\Filament\Resources\MainResource\RelationManagers;
 use App\Models\Main;
 use App\Models\Main_arc;
+use App\Models\Salary;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -15,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 
 
 class MainResource extends Resource
@@ -191,11 +194,13 @@ class MainResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+
                 Tables\Actions\Action::make('print')
                     ->hiddenLabel()
                     ->iconButton()->color('success')
                     ->icon('heroicon-m-printer')
                     ->url(fn (Main $record): string => route('pdfmaincont', $record)),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

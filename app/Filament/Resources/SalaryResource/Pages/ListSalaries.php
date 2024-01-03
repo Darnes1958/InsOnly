@@ -29,6 +29,7 @@ class ListSalaries extends ListRecords
             ->label('إضافة مرتب جديد'),
             Actions\Action::make('إدارج_مرتبات')
                 ->color('success')
+                ->modalSubmitActionLabel('إدراج')
                 ->form([
                     DatePicker::make('month')
                     ->label('عن شهر')

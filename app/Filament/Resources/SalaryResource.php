@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
@@ -57,13 +58,14 @@ class SalaryResource extends Resource
               TextColumn::make('raseed')
                   ->label('الرصيد')
                   ->searchable(),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -85,6 +87,8 @@ class SalaryResource extends Resource
             'index' => Pages\ListSalaries::route('/'),
             'create' => Pages\CreateSalary::route('/create'),
             'edit' => Pages\EditSalary::route('/{record}/edit'),
+
+
         ];
     }
 }
