@@ -21,8 +21,11 @@ class SalaryTranView extends Page implements HasTable, HasForms
 {
 
 
-    use InteractsWithTable,InteractsWithForms;
-
+  use InteractsWithTable,InteractsWithForms;
+  protected static ?string $navigationLabel='حركة مرتب';
+  protected static ?string $navigationGroup='مرتبات';
+  protected static ?int $navigationSort=2;
+  protected ?string $heading = '';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static string $view = 'filament.pages.salary-tran-view';
 
