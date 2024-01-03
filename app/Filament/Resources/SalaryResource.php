@@ -42,6 +42,10 @@ class SalaryResource extends Resource
     {
         return $table
             ->columns([
+              TextColumn::make('name')
+                ->label('الاسم')
+                ->sortable()
+                ->searchable(),
               TextColumn::make('sal')
                   ->label('المرتب')
                   ->sortable()
@@ -49,14 +53,7 @@ class SalaryResource extends Resource
               IconColumn::make('status')
                     ->label('الحالة')
                     ->sortable()
-                    ->icon(fn (string $state): string => match ($state) {
-                        'فعال' => 'heroicon-o-check-circle',
-                        'موقوف' => 'heroicon-o-x-circle',
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        'موقوف' => 'warning',
-                        'فعال' => 'success',
-                    }),
+                    ->boolean(),
               TextColumn::make('raseed')
                   ->label('الرصيد')
                   ->searchable(),

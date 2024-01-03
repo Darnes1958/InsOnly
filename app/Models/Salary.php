@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class Salary extends Model
 {
     protected $connection = 'other';
-
+  protected $casts = [
+    'status' => 'boolean',
+  ];
     public function Salarytran(){
         return $this->hasMany(Salarytran::class);
     }
