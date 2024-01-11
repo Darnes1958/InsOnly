@@ -194,13 +194,11 @@ class MainResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-
                 Tables\Actions\Action::make('print')
                     ->hiddenLabel()
                     ->iconButton()->color('success')
                     ->icon('heroicon-m-printer')
                     ->url(fn (Main $record): string => route('pdfmaincont', $record)),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -16,7 +16,7 @@
                 <td class="order-td" style="width: 15%; text-align: center"> {{$res->sul_begin}} </td>
                 <td style="border: none;width: 12%;font-size: 12pt; "> تاريخ العقد </td>
                 <td style="border: none;width: 2%; ">  </td>
-                <td class="order-td" style="width: 30%;"> {{$res->Customer->CusName}} </td>
+                <td class="order-td" style="width: 30%;"> {{$res->name}} </td>
                 <td style="border: none;width: 15%;font-size: 14pt; "> اسم الزبون </td>
             </tr>
             <tr style="border: none; line-height: 18px;">
@@ -33,24 +33,8 @@
         <tbody >
         <tr style="border: none; line-height: 18px;">
             <td style="border: none;width: 30%; ">  </td>
-            <td class="order-td" style="width: 15%; text-align: center">  </td>
-            <td style="border: none;width: 12%;font-size: 12pt; ">  </td>
-            <td style="border: none;width: 2%; ">  </td>
-            <td class="order-td" style="width: 15%;"> {{$res->sul}} </td>
-            <td style="border: none;width: 20%;font-size: 12pt; "> اجمالي التقسيط </td>
-        </tr>
-        <tr style="border: none; line-height: 18px;">
-            <td style="border: none;width: 30%; ">  </td>
             <td class="order-td" style="width: 15%; text-align: center"> {{$res->pay}} </td>
             <td style="border: none;width: 12%;font-size: 12pt; "> المسدد </td>
-            <td style="border: none;width: 2%; ">  </td>
-            <td class="order-td" style="width: 15%;"> {{$res->raseed}} </td>
-            <td style="border: none;width: 12%;font-size: 12pt; "> المطلوب </td>
-        </tr>
-        <tr style="border: none; line-height: 18px;">
-            <td style="border: none;width: 30%; ">  </td>
-            <td class="order-td" style="width: 15%; text-align: center"> {{$res->kst_count}} </td>
-            <td style="border: none;width: 15%;font-size: 12pt; "> عدد الأقساط </td>
             <td style="border: none;width: 2%; ">  </td>
             <td class="order-td" style="width: 15%;"> {{$res->kst}} </td>
             <td style="border: none;width: 12%;font-size: 12pt; "> القسط </td>
@@ -79,7 +63,7 @@
         <tbody style="margin-bottom: 40px; ">
         @foreach($res2 as $key => $item)
             <tr>
-                <td> {{ $item->KsmType->ksm_type_name }} </td>
+                <td> {{ $item->ksm_type }} </td>
                 <td> {{ $item->ksm }} </td>
                 <td style="text-align: center"> {{ $item->ksm_date }} </td>
                 <td style="text-align: center"> {{ $item->kst_date }} </td>

@@ -45,8 +45,9 @@ use AksatTrait;
     $this->user_id=Auth::user()->id;
   }
 
-    public function FillTrans($main_id,$ksm_date,$ksm_notes){
+    public function FillTrans($main_id,$ksm_date,$ksm_notes,$ksm_type){
         $this->main_id=$main_id;
+        $this->ksm_type=$ksm_type;
         $this->ksm_notes=$ksm_notes;
         $this->ser=Tran::where('main_id',$main_id)->max('ser')+1;
         $this->ksm=Main::find($main_id)->kst;

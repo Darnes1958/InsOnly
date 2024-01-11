@@ -9,6 +9,7 @@ use App\Models\Bank;
 use App\Models\Main;
 use App\Models\Tran;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -29,6 +30,7 @@ class InpKst extends Component implements HasForms,HasTable
     public $bank_id;
     public $ksm_date;
     public $ksm_notes;
+    public $ksm_type='مصرفي';
 
     public TransForm $transForm;
 
@@ -53,11 +55,26 @@ class InpKst extends Component implements HasForms,HasTable
                         'wire:keydown.enter' => "\$dispatch('goto', { test: 'ksmnotes' })",
                     ])
                     ->id('ksmdate'),
+                Radio::make('ksm_type')
+                 ->options([
+                   'مصرفي' => 'مصرفي',
+                   'نقدا' => 'نقدا',
+                   'الكتروني' => 'الكتروني',
+                 ])
+                 ->descriptions([
+                   'مصرفي' => 'من المصرف',
+                   'نقدا' => 'كاش',
+                   'الكتروني' => 'موبي,ادفع لي ..الخ ',
+                 ])
+                 ->Label('نوع الخصم')
+                 ->inline()
+                  ->inlineLabel(false)
+                 ->columnSpan(2),
                 TextInput::make('ksm_notes')
                     ->label('ملاحظات')
                     ->columnSpan(3)
                     ->id('ksmnotes')
-            ])->columns(6);
+            ])->columns(8);
     }
 
     public function table(Table $table):Table
@@ -90,13 +107,14 @@ class InpKst extends Component implements HasForms,HasTable
                     ->action(function (Collection $records) {
                         foreach ($records as  $item)
                         {
-                           $this->transForm->FillTrans($item->id,$this->ksm_date,$this->ksm_notes);
+                           $this->transForm->FillTrans($item->id,$this->ksm_date,$this->ksm_notes,$this->ksm_type);
                            Tran::create($this->transForm->all());
                            $nextKst=date('Y-m-d', strtotime($this->transForm->kst_date . "+1 month"));
                            Main::find($item->id)->update([
                              'LastKsm'=>$this->ksm_date,
                              'NextKst'=>$nextKst,
                              'Late'=>$this->RetLate($item->id,$nextKst),
+                             'pay' => Tran::where('main_id',$item->id)->sum('ksm'),
                              ]);
                         }
 
