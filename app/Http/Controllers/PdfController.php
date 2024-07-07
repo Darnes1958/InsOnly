@@ -127,6 +127,19 @@ class PdfController extends Controller
         $headers = array("Content-type" => "application/pdf",);
         return response()->streamDownload(fn () => print($pdf), "invoice.pdf", $headers );
     }
+  function PdfAllName()
+  {
+    $RepDate = date('Y-m-d');
+    $cus = OurCompany::where('Company', Auth::user()->company)->first();
+
+    $res = Main::orderBy('name')->get();
+
+    $html = view('PrnView.pdf-all-name',
+      ['RepTable' => $res, 'cus' => $cus, 'RepDate' => $RepDate])->toArabicHTML();
+    $pdf = PDF::loadHTML($html)->output();
+    $headers = array("Content-type" => "application/pdf",);
+    return response()->streamDownload(fn () => print($pdf), "invoice.pdf", $headers );
+  }
 
     function PdfMotakraBank(Request $request)
     {

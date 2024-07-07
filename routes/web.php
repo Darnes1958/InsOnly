@@ -31,6 +31,7 @@ Route::controller(PdfController::class)->group(function (){
     route::get('/pdfmaincont/{id}/', 'PdfMainCont')->name('pdfmaincont') ;
     route::get('/pdfmain/{id}/', 'PdfMain')->name('pdfmain') ;
 
+    route::get('/pdfallname', 'PdfAllName')->name('pdfallname') ;
     route::get('/pdfall/{bank_id?}/{By?}', 'PdfAll')->name('pdfall') ;
     route::get('/pdfmotakrabank/{Baky?}/{bank_id?}/{By?}', 'PdfMotakraBank')->name('pdfmotakrabank') ;
     route::get('/pdfmohasla/{bank_id?}/{Date1?}/{Date2?}/{By?}', 'PdfMohasla')->name('pdfmohasla') ;

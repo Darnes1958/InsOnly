@@ -13,6 +13,12 @@
 
         </div>
 
+        <div class="flex gap-1">
+            <span class="text-primary-500">طباعة كل الاسماء</span>
+                <a  href="{{route('pdfallname')}}"  class="text-blue-400-500">
+                    <x-icon.print/>
+                </a>
+        </div>
         @if($bank_id != null)
         <div class="flex gap-1">
             <span class="text-primary-500">طباعة</span>

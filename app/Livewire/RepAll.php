@@ -108,7 +108,7 @@ public $kst;
               ->inlineLabel()
               ->label('عدد أشهر التأخير')
               ->reactive()
-          ->numeric()
+              ->numeric()
               ->visible(fn (Forms\Get $get): bool =>  $get('rep_name')=='Motakra'),
 
           DatePicker::make('Date1')
